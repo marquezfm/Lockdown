@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   main:
-    runs-on: ubunti-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
