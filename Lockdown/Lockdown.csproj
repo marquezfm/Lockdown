@@ -12,4 +12,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <PropertyGroup>
+    <CodeAnalysisRuleset>../stylecop.ruleset</CodeAnalysisRuleset>
+  </PropertyGroup>
+
 </Project>
