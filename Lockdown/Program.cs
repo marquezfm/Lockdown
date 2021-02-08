@@ -1,6 +1,7 @@
 ﻿namespace Lockdown
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
     using System.IO;
     using McMaster.Extensions.CommandLineUtils;
 
@@ -14,6 +15,18 @@
         // Obtiene el valor de la propiedad de la versión
         public string LockdownVersion { get; } = "0.0.0";
 
+        [Argument(0, Description = "The first operand")]
+        [Required]
+        public int FirstNumber { get; set; }
+
+        [Argument(1, Description = "The first operation")]
+        [Required]
+        public string Operation { get; set; }
+
+        [Argument(2, Description = "The second operand")]
+        [Required]
+        public int SecondNUmber { get; set; }
+
         public static int Main(string[] args)
         {
             // Especifica el nombre de la claase que contiene el programa principal  y se le pasan los argumentos
@@ -25,7 +38,27 @@
         public int OnExecute(CommandLineApplication app)
         {
             // Muestra la ayuda de la aplicación
-            app.ShowHelp();
+            // app.ShowHelp();
+            int result;
+            switch (this.Operation)
+            {
+                case "+":
+                    result = this.FirstNumber + this.SecondNUmber;
+                    break;
+                case "-":
+                    result = this.FirstNumber - this.SecondNUmber;
+                    break;
+                case "*":
+                    result = this.FirstNumber * this.SecondNUmber;
+                    break;
+                case "/":
+                    result = this.FirstNumber / this.SecondNUmber;
+                    break;
+                default:
+                    throw new NotImplementedException($"The operation {this.Operation} is not implemented");
+            }
+
+            Console.WriteLine(result);
 
             // 0 Es el valor que devuelven las herramientas de cosnsola para indicar que todo se ejecutó correctamente
             return 0;
