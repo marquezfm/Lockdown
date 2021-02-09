@@ -1,12 +1,19 @@
 ﻿namespace Lockdown.Commands
 {
-    using System;
+    using McMaster.Extensions.CommandLineUtils;
 
     public class BuildCommand
     {
+        private readonly IConsole console;
+
+        public BuildCommand(IConsole console)
+        {
+            this.console = console;
+        }
+
         public int OnExecute()
         {
-            Console.WriteLine("You've executed the build command");
+            this.console.WriteLine("You've executed the build command");
             return 0;
         }
     }

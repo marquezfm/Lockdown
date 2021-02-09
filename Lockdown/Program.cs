@@ -2,6 +2,7 @@
 {
     using Lockdown.Commands;
     using McMaster.Extensions.CommandLineUtils;
+    using Microsoft.Extensions.DependencyInjection;
 
     [Command("lockdown")]
     [VersionOptionFromMember("--version", MemberName = nameof(LockdownVersion))]
@@ -13,7 +14,17 @@
 
         public static int Main(string[] args)
         {
-            return CommandLineApplication.Execute<Program>(args);
+            ServiceProvider services = new ServiceCollection()
+                .AddSingleton<IConsole>(PhysicalConsole.Singleton)
+                .BuildServiceProvider();
+
+            var app = new CommandLineApplication<Program>();
+            app.Conventions
+                .UseDefaultConventions()
+                .UseConstructorInjection(services);
+
+            // return CommandLineApplication.Execute<Program>(args);
+            return app.Execute(args);
         }
 
         public int OnExecute(CommandLineApplication app)
